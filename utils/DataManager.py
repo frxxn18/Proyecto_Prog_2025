@@ -52,3 +52,9 @@ class DataManager:
             with open(composed_path, 'r', encoding='utf-8') as f:
                 datos = json.loads(f.read())
         return datos
+
+
+    @staticmethod
+    def vaciar_base(rutas: list):
+        for ruta in rutas:
+            DataManager.guardar([], ruta)

@@ -1,1 +1,0 @@
-#aqui ira la funcion para validar cualquier tipo de cosa
