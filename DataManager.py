@@ -9,9 +9,8 @@ class DataManager:
 
     @staticmethod
     def pasar_json(objetos):
-        serializable = {}
-
         if isinstance(objetos, dict):
+            serializable = {}
             for key, value in objetos.items():
                 clave = str(key)
                 if hasattr(value, 'to_dict'):
@@ -19,10 +18,19 @@ class DataManager:
                 else:
                     valor = value
                 serializable[clave] = valor
-        else:
-            serializable = objetos  # Si no es dict, lo dejamos como está
+            return json.dumps(serializable, indent=4)
+        
+        elif isinstance(objetos, list):
+            serializable = []
+            for item in objetos:
+                if hasattr(item, 'to_dict'):
+                    serializable.append(item.to_dict())
+                else:
+                    serializable.append(item)
+            return json.dumps(serializable, indent=4)
 
-        return json.dumps(serializable, indent=4)
+        else:
+            return json.dumps(objetos, indent=4)
 
 
 
