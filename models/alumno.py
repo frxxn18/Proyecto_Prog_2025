@@ -1,11 +1,11 @@
 class Alumno:
-    def __init__(self, nie, nombre, apellido, apellidos, tramo, bilingue):
+    def __init__(self, nie, nombre, apellido, apellidos, tramo, bilingüe):
         self.nie = nie
         self.nombre = nombre
         self.apellido = apellido
         self.apellidos = apellidos
         self.tramo = tramo
-        self.bilingue = bilingue
+        self.bilingüe = bilingüe
 
     def to_dict(self):
         return {
@@ -14,7 +14,7 @@ class Alumno:
             "apellido": self.apellido,
             "apellidos": self.apellidos,
             "tramo": self.tramo,
-            "bilingue": self.bilingue
+            "bilingüe": self.bilingüe
         }
     
 
@@ -25,5 +25,5 @@ class Alumno:
             data["nombre"],
             data["apellidos"],
             data["tramo"],
-            data["bilingue"]
+            data["bilingüe"]
         )
