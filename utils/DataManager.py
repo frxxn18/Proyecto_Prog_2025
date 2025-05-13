@@ -43,6 +43,7 @@ class DataManager:
         print("Datos guardados en el archivo", ruta)
         input("Presiona Enter para continuar... \n")
 
+
     @staticmethod
     def cargar(ruta):
         composed_path = os.path.join(DATA_DIR, ruta + ".json")

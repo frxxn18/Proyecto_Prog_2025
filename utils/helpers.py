@@ -1,0 +1,1 @@
+#aqui iran funciones como limpiar_pantalla o confirmar
