@@ -48,6 +48,37 @@ def filtrar_libros():
     input("Pulsa Enter para continuar.")
 
 
+def modificar_libro():
+    libros = DataManager.cargar("libros")
+    isbn = input("Introduce el ISBN del libro a modificar: ").strip()
+    if not validar_isbn(isbn):
+        print("ISBN no válido.")
+        input("Pulsa ENTER para continuar.")
+        return
+    libro = next((l for l in libros if l["isbn"] == isbn), None)
+    if not libro:
+        print("No se encontró ningún libro con ese ISBN.")
+    else:
+        print("Introduce los nuevos datos (deja en blanco para mantener el actual):")
+        nuevo_titulo = input(f"Título [{libro['titulo']}]: ").strip() or libro['titulo']
+        nuevo_autor = input(f"Autor [{libro['autor']}]: ").strip() or libro['autor']
+        nuevo_ejemplares = input(f"Número de ejemplares [{libro['numero_ejemplares']}]: ").strip()
+        nuevo_id_materia = input(f"ID Materia [{libro['id_materia']}]: ").strip() or libro['id_materia']
+        nuevo_id_curso = input(f"ID Curso [{libro['id_curso']}]: ").strip() or libro['id_curso']
+
+        libro['titulo'] = nuevo_titulo
+        libro['autor'] = nuevo_autor
+        if nuevo_ejemplares.isdigit():
+            libro['numero_ejemplares'] = int(nuevo_ejemplares)
+        libro['id_materia'] = nuevo_id_materia
+        libro['id_curso'] = nuevo_id_curso
+
+        DataManager.guardar(libros, "libros")
+        print("Libro modificado correctamente.")
+    input("Pulsa ENTER para continuar.")
+
+
+
 def mostrar_menu_libros():
     while True:
         limpiar_pantalla()
@@ -63,9 +94,10 @@ def mostrar_menu_libros():
         elif opcion == "2":
             eliminar_libro()
         elif opcion == "3":
+            modificar_libro()
+        elif opcion == "4":
             filtrar_libros()
         elif opcion == "0":
             break
         else:
             input("Opción no válida. Pulsa ENTER para continuar.")
-            
