@@ -2,13 +2,14 @@
 
 import os
 from menus import menu_alumnos, menu_libros, menu_prestamos, menu_listados, menu_datos
+from utils.helpers import limpiar_pantalla
 
 def limpiar():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def mostrar_menu_principal():
     while True:
-        limpiar()
+        limpiar_pantalla()
         print("=== MENÚ PRINCIPAL ===")
         print("1. Gestión de Alumnos")
         print("2. Gestión de Libros")
