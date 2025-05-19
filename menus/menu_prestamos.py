@@ -1,29 +1,43 @@
-#Gestión de préstamos	Asignar, devolver, cerrar préstamo
-
-
-
-import os
-
-def limpiar():
-    os.system('cls' if os.name == 'nt' else 'clear')
+from utils.helpers import limpiar_pantalla
+from utils.PrestManager import (
+    registrar_prestamo,
+    ver_prestamos,
+    devolver_libro,
+    modificar_prestamo,
+    eliminar_prestamo,
+    cerrar_prestamo,
+    firmar_contrato
+)
 
 def mostrar_menu_prestamos():
     while True:
-        limpiar()
-        print("=== GESTIÓN DE PRÉSTAMOS ===")
-        print("1. Asignar préstamo")
-        print("2. Devolver libro")
-        print("3. Ver préstamos por alumno")
+        limpiar_pantalla()
+        print("=== MENÚ DE PRÉSTAMOS ===")
+        print("1. Registrar préstamo")
+        print("2. Ver préstamos")
+        print("3. Devolver libro")
+        print("4. Modificar préstamo")
+        print("5. Eliminar préstamo")
+        print("6. Cerrar préstamo")
+        print("7. Firmar contrato")
         print("0. Volver al menú principal")
 
-        opcion = input("Selecciona una opción: ")
+        opcion = input("Selecciona una opción: ").strip()
 
         if opcion == "1":
-            """asignar_prestamo()"""
+            registrar_prestamo()
         elif opcion == "2":
-            """devolver_libro()"""
+            ver_prestamos()
         elif opcion == "3":
-            """mostrar_prestamos()"""
+            devolver_libro()
+        elif opcion == "4":
+            modificar_prestamo()
+        elif opcion == "5":
+            eliminar_prestamo()
+        elif opcion == "6":
+            cerrar_prestamo()
+        elif opcion == "7":
+            firmar_contrato()
         elif opcion == "0":
             break
         else:
