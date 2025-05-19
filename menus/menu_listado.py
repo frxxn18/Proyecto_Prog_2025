@@ -97,6 +97,7 @@ def mostrar_menu_listados():
         print("1. Listado de alumnos")
         print("2. Listado de libros")
         print("3. Listado de préstamos")
+        print("4. Listado con filtros")
         print("0. Volver al menú principal")
         opcion = input("Selecciona una opción: ").strip()
         
@@ -106,6 +107,8 @@ def mostrar_menu_listados():
             listado_libros()
         elif opcion == "3":
             listado_prestamos()
+        elif opcion == "4":
+            listado_filtrado()
         elif opcion == "0":
             break
         else:
