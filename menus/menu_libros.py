@@ -85,7 +85,8 @@ def mostrar_menu_libros():
         print("=== MENÚ DE LIBROS ===")
         print("1. Ver libros")
         print("2. Eliminar libro")
-        print("3. Filtrar libros")
+        print("3. Modificar libro")
+        print("4.Filtrar libros")
         print("0. Volver al menú principal")
         opcion = input("Selecciona una opción: ").strip()
 
