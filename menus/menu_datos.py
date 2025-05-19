@@ -113,6 +113,21 @@ def exportar_todo_en_formato():
         print(f"Datos exportados con éxito a {tabla}.{formato}")
 
 
+
+def vaciar_datos():
+    print("-- Vaciar todos los datos del sistema --")
+    confirmacion = input("¿Estás seguro de que deseas vaciar TODOS los datos? (S/N): ").strip().upper()
+    if confirmacion == "S":
+        rutas = ["alumnos", "cursos", "materias", "libros", "prestamos"]
+        DataManager.vaciar_base(rutas)
+        print("Todos los archivos han sido vaciados correctamente.")
+    else:
+        print("Operación cancelada.")
+    input("Pulsa ENTER para continuar.")
+
+
+
+
 def mostrar_menu_datos():
     while True:
         limpiar_pantalla()
@@ -121,6 +136,7 @@ def mostrar_menu_datos():
         print("2. Guardar datos en los archivos JSON")
         print("3. Exportar datos a eleccion")
         print("4. Exportar todos los datos")
+        print("5. Vaciar los datos")
         print("0. Volver al menú principal")
 
         opcion = input("Seleccione una opcion: ")
@@ -133,6 +149,8 @@ def mostrar_menu_datos():
             exportar_datos_a_elegir()
         elif opcion == "4":
             exportar_todo_en_formato()
+        elif opcion == "5":
+            vaciar_datos()
         elif opcion == "0":
             break
         else:
