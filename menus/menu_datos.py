@@ -22,14 +22,14 @@ def cargar_datos():
             print("El nombre ingresado no es válido.")
         apellidos = input("Ingrese los apellidos:)").strip().title()
         tramo = input("Ingrese el tramo (0,  I, II):").strip().upper()
-        bilingue = input("¿El alumno es bilungue? (S/N):").strip().upper() == "S"
+        bilingüe = input("¿El alumno es bilungue? (S/N):").strip().upper() == "S"
 
         alumno = {
             "nie": nie,
             "nombre": nombre,
             "apellidos": apellidos,
             "tramo": tramo,
-            "bilingue": bilingue
+            "bilingüe": bilingüe
         }
 
         alumnos = DataManager.get_data("alumnos")
