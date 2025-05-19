@@ -11,6 +11,19 @@ def registrar_prestamo():
     curso = input("Curso (ej. 1ESO): ").strip().upper()
     isbn = input("ISBN del libro: ").strip()
 
+#Validacion de los datos
+    alumnos = DataManager.cargar("alumnos")
+    if not any((a['nie']== nie for a in alumnos)):
+        print("El alumno no existe")
+        input("Pulsa Enter para continuar")
+        return
+    
+    cursos = DataManager.cargar("cursos")
+    if not any((c['curso']== curso for c in cursos)):
+        print("El curso no existe")
+        input("Pulsa Enter para continuar.")
+        return
+#Mira si hay stock o no para permitir el prestamo o no
     libros = DataManager.cargar("libros")
     libro = next((l for l in libros if l["isbn"] == isbn), None)
     if not libro:
