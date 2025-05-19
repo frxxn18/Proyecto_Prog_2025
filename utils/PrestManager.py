@@ -11,6 +11,21 @@ def registrar_prestamo():
     curso = input("Curso (ej. 1ESO): ").strip().upper()
     isbn = input("ISBN del libro: ").strip()
 
+    libros = DataManager.cargar("libros")
+    libro = next((l for l in libros if l["isbn"] == isbn), None)
+    if not libro:
+        print("El libro no existe")
+        input("Pulsa Enter para continuar.")
+        return
+    
+    prestamos = DataManager.cargar("prestamos")
+    prestamos_activos = [p for p in prestamos if p["isbn"] == isbn and p["estado"] == "P"]
+    if len(prestamos_activos) >= libro["numero_ejemplares"]:
+        print(f"No hay ejemplares disponibles del libro '{libro['titulo']}' ")
+        input("Pulsa Enter para continuar.")
+        return
+
+
 
     while True:
         fecha_entrega = input("Fecha de entrega (YYYY-MM-DD): ")
