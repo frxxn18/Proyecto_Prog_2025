@@ -1,6 +1,6 @@
 #Carga/Exportación de datos	Cargar datos al inicio, exportar al final 
 
-
+import json
 import os
 import pandas as pd
 from utils.DataManager import DataManager
@@ -73,16 +73,44 @@ def guardar_datos():
     print("Advertencia: (Los datos se guardarán automaticamente despues de cargarlos)")
 
 
-def exportar_datos():
-    print("--Exportar A CSV--")
-    tabla = input("¿Que datos desea exportar? (alumnos, libros, etc...:").strip()
+def exportar_datos_a_elegir():
+    print("--Exportar datos a eleccion--")
+    tabla = input("¿Que datos desea exportar? (alumnos, libros, prestamos):").strip().lower()
+    formato =input("¿En qué formato desea exportar? (csv, json):").strip().lower()
+
     datos = DataManager.cargar(tabla)
     if  not datos:
         print("No hay datos para exportar")
         return
-    dataframe = pd.DataFrame(datos)
-    dataframe.to_csv(f"{tabla}.csv", index=False)
-    print(f"Los datos se han exportado a {tabla}.csv")
+    
+    if formato == "csv":
+        pd.DataFrame(datos).to_csv(f"{tabla}.csv", index=False)
+    elif formato == "json":
+        with open(f"{tabla}.json", "w", encoding="utf-8") as f:
+            json.dump(datos, f, indent=4, ensure_ascii=False)
+    else:
+        print("Formato de exportación no válido")
+    print(f"Datos exportados con éxito a {tabla}.{formato}")
+
+
+def exportar_todo_en_formato():
+    print("--Exportar todos los  datos--")
+    formato = input("¿En qué formato desea exportar? (csv, json):").strip().lower()
+    tablas = ["alumnos", "cursos", "materias", "libros", "prestamos"]
+
+    for tabla in tablas:
+        datos = DataManager.cargar(tabla)
+        if not datos:
+            continue
+            
+        if formato == "csv":
+            pd.DataFrame(datos).to_csv(f"{tabla}.csv", index=False)
+        elif formato == "json":
+            with open(f"{tabla}.json", "w", encoding="utf-8") as f:
+                json.dump(datos, f, indent=4, ensure_ascii=False)
+        else:
+            print("Formato de exportación no válido")
+        print(f"Datos exportados con éxito a {tabla}.{formato}")
 
 
 def mostrar_menu_datos():
@@ -91,7 +119,8 @@ def mostrar_menu_datos():
         print("--Caga/Exportacion de Datos--")
         print("1. Cargar datos desde los archivos JSON")
         print("2. Guardar datos en los archivos JSON")
-        print("3. Exportar datos a CSV")
+        print("3. Exportar datos a eleccion")
+        print("4. Exportar todos los datos")
         print("0. Volver al menú principal")
 
         opcion = input("Seleccione una opcion: ")
@@ -101,7 +130,9 @@ def mostrar_menu_datos():
         elif opcion == "2":
             guardar_datos()
         elif opcion == "3":
-            exportar_datos()
+            exportar_datos_a_elegir()
+        elif opcion == "4":
+            exportar_todo_en_formato()
         elif opcion == "0":
             break
         else:
