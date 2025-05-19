@@ -20,7 +20,7 @@ def listado_libros():
         print("No hay libros registrados")
     else:
         for l in libros:
-            print(f"ISBN: {l['isbn']} | Título: {l['titulo']} | Autor: {l['autor']}")
+            print(f"ISBN: {l['isbn']} | Título: {l['titulo']} | Autor: {l['autor']} | Curso: {l['id_curso']} | Materia: {l['id_materia']}")
     input("Pulsa Enter para continuar.")
 
 
@@ -33,6 +33,61 @@ def listado_prestamos():
             estado = "Devuelto" if p["estado"] == "D" else "Prestado"
             print(f"NIE: {p['nie']} | ISBN: {p['isbn']} | Entrega: {p['fecha_entrega']} | Devolución:  {p['fecha_devolucion']} | Estado: {estado} | Curso: {p['curso']}")
     input("Pulsa Enter para continuar.")
+
+
+def listado_filtrado():
+    while True:
+        limpiar_pantalla()
+        print("=== LISTADO FILTRADO ===")
+        print("1. Solo préstamos DEVUELTOS")
+        print("2. Solo préstamos PRESTADOS")
+        print("3. Libros por curso")
+        print("4. Libros por materia")
+        print("0. Volver")
+        opcion = input("Selecciona una opcion: ").strip()
+
+        if opcion == "1":
+            prestamos = DataManager.cargar("prestamos")
+            devueltos = [p for p in prestamos if p["estado"] == "D"]
+            for p in devueltos:
+                print(f"NIE: {p['nie']} | ISBN: {p['isbn']} | Devuelto el: {p['fecha_devolucion']}")
+            input("Pulsa Enter para continuar.")
+
+        elif opcion == "2":
+            prestamos = DataManager.cargar("prestamos")
+            pendientes = [p for p in prestamos if p["estado"] != "D"]
+            for p in pendientes:
+                print(f"NIE: {p['nie']} | ISBN: {p['isbn']} | Entrega: {p['fecha_entrega']} | Estado: {p['estado']}")
+            input("Pulsa Enter para continuar.")
+        
+        elif opcion == "3":
+            curso = input("Ingrese el ID del curso (ej. 1ESO): ").strip().upper()
+            libros = DataManager.cargar("libros")
+            por_curso = [l for l in libros if l["id_curso"] == curso]
+            for l in por_curso:
+                print(f"ISBN: {l['isbn']} | Título: {l['titulo']} | Autor: {l['autor']}")
+            input("Pulsa Enter para continuar.")
+        
+        elif opcion == "4":
+            materia = input("Ingrese el ID de la materia").strip()
+            libros = DataManager.cargar("libros")
+            por_materia = [l for l in libros if l["id_materia"] == materia]
+            for l in por_materia:
+                print(f"ISBN: {l['isbn']} | Título: {l['titulo']} | Autor: {l['autor']}")
+            input("Pulsa Enter para continuar.")
+
+        elif opcion == "0":
+            break
+        else:
+            input("Opción no válida. Pulsa ENTER para continuar.")
+
+
+
+
+
+
+
+
 
 
 def mostrar_menu_listados():
