@@ -1,8 +1,7 @@
 class Alumno:
-    def __init__(self, nie, nombre, apellido, apellidos, tramo, bilingüe):
+    def __init__(self, nie, nombre,apellidos, tramo, bilingüe):
         self.nie = nie
         self.nombre = nombre
-        self.apellido = apellido
         self.apellidos = apellidos
         self.tramo = tramo
         self.bilingüe = bilingüe
@@ -11,7 +10,6 @@ class Alumno:
         return {
             "nie": self.nie,
             "nombre": self.nombre,
-            "apellido": self.apellido,
             "apellidos": self.apellidos,
             "tramo": self.tramo,
             "bilingüe": self.bilingüe

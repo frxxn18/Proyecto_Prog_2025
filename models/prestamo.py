@@ -37,13 +37,16 @@ class Prestamo:
 
     @staticmethod
     def from_dict(data: dict):
+        estado = data.get
+        if estado not in ["P", "D"]:
+            estado = "P"
         return Prestamo(
             nie=data["nie"],
             curso=data["curso"],
             isbn=data["isbn"],
             fecha_entrega=data["fecha_entrega"],
             fecha_devolucion=data["fecha_devolucion"],
-            estado=data.get("estado", "P")
+            estado= estado
         )
     
 
