@@ -46,6 +46,7 @@ def modificar_alumno():
 
     if index is None:
         print("No existe alumno con ese NIE")
+        input("Pulsa Enter para continuar.")
         return
     
     alumno = alumnos[index]
@@ -53,11 +54,13 @@ def modificar_alumno():
     confirmacion = input("¿Desea modificar los datos? (S/N)").strip().upper()
     if confirmacion != "S":
         print("Datos no modificados")
+        input("Pulsa Enter para continuar.")
         return
     
     nuevo_nombre = input(f"Nuevo nombre [{alumno['nombre']}]: ") or alumno['nombre']
     if not validar_nombre(nuevo_nombre):
         print("Nombre no válido")
+        input("Pulsa Enter para continuar.")
         return
     
     nuevos_apellidos = input(f"Nuevos apellidos [{alumno['apellidos']}]: ") or alumno['apellidos']
@@ -74,7 +77,7 @@ def modificar_alumno():
 
     DataManager.guardar(alumnos, "alumnos")
     print("Datos actualizados correctamente")
-
+    input("Pulsa Enter para continuar.")
 
 
 def filtrar_alumnos():
@@ -88,7 +91,7 @@ def filtrar_alumnos():
         for alumno in resultados:
             bilingüe = "S" if alumno["bilingüe"] else "N"
             print(f"NIE: {alumno['nie']} | Nombre: {alumno['nombre']} | Apellidos: {alumno['apellidos']} | Tramo: {alumno['tramo']} | Bilingüe: {bilingüe}")
-
+    input("Pulsa Enter para continuar.")
 
 
 def mostrar_menu_alumnos():
