@@ -32,7 +32,7 @@ def registrar_prestamo():
         return
     
     prestamos_cargar = DataManager.cargar("prestamos")
-    prestamos = [Prestamo.to_dict(p) for p in prestamos_cargar]
+    prestamos = [Prestamo.from_dict(p) for p in prestamos_cargar]
     prestamos_activos = [p for p in prestamos if p.isbn == isbn and p.estado == "P"]
     if len(prestamos_activos) >= libro["numero_ejemplares"]:
         print(f"No hay ejemplares disponibles del libro '{libro['titulo']}' ")
@@ -69,7 +69,7 @@ def registrar_prestamo():
 
 def ver_prestamos():
     prestamos_cargar = DataManager.cargar("prestamos")
-    prestamos = [Prestamo.to_dict(p) for p in prestamos_cargar]
+    prestamos = [Prestamo.from_dict(p) for p in prestamos_cargar]
     if not prestamos:
         print("No hay préstamos registrados.")
     else:
@@ -80,7 +80,7 @@ def ver_prestamos():
 
 def devolver_libro():
     prestamos_cargar = DataManager.cargar("prestamos")
-    prestamos = [Prestamo.to_dict(p) for p in prestamos_cargar]
+    prestamos = [Prestamo.from_dict(p) for p in prestamos_cargar]
     nie = input("NIE del alumno: ")
     isbn = input("ISBN del libro a devolver: ")
 
@@ -102,7 +102,7 @@ def devolver_libro():
 
 def modificar_prestamo():
     prestamos_cargar = DataManager.cargar("prestamos")
-    prestamos = [Prestamo.to_dict(p) for p in prestamos_cargar]
+    prestamos = [Prestamo.from_dict(p) for p in prestamos_cargar]
     nie = input("NIE del alumno: ").strip().upper()
     if not validar_nie(nie):
         print("NIE no válido")
@@ -144,7 +144,7 @@ def modificar_prestamo():
 
 def eliminar_prestamo():
     prestamos_cargar = DataManager.cargar("prestamos")
-    prestamos = [Prestamo.to_dict(p) for p in prestamos_cargar]
+    prestamos = [Prestamo.from_dict(p) for p in prestamos_cargar]
     nie = input("NIE del alumno: ").strip().upper()
     if not validar_nie(nie):
         print("NIE no válido")
@@ -179,7 +179,7 @@ def eliminar_prestamo():
 
 def cerrar_prestamo():
     prestamos_cargar = DataManager.cargar("prestamos")
-    prestamos = [Prestamo.to_dict(p) for p in prestamos_cargar]
+    prestamos = [Prestamo.from_dict(p) for p in prestamos_cargar]
     nie = input("NIE del alumno: ").strip().upper()
     if not validar_nie(nie):
         print("NIE no válido")
@@ -210,7 +210,7 @@ def firmar_contrato():
         return
     
     prestamos_cargar = DataManager.cargar("prestamos")
-    prestamos = [Prestamo.to_dict(p) for p in prestamos_cargar]
+    prestamos = [Prestamo.from_dict(p) for p in prestamos_cargar]
     prestamos_nie = [p for p in prestamos if p.nie == nie]
 
     if not prestamos_nie:
