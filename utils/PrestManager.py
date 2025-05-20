@@ -31,13 +31,19 @@ def registrar_prestamo():
         input("Pulsa Enter para continuar.")
         return
     
-    prestamos = DataManager.cargar("prestamos")
-    prestamos_activos = [p for p in prestamos if p["isbn"] == isbn and p["estado"] == "P"]
+    prestamos_cargar = DataManager.cargar("prestamos")
+    prestamos = [Prestamo.to_dict(p) for p in prestamos_cargar]
+    prestamos_activos = [p for p in prestamos if p.isbn == isbn and p.estado == "P"]
     if len(prestamos_activos) >= libro["numero_ejemplares"]:
         print(f"No hay ejemplares disponibles del libro '{libro['titulo']}' ")
         input("Pulsa Enter para continuar.")
         return
 
+    for prestamo in prestamos:
+        if prestamo.nie == nie and prestamo.isbn == isbn and prestamo.estado == "P":
+            print("Ya existe un préstamo activo con ese NIE e ISBN.")
+            print("Pulsa ENTER para continuar.")
+            return
 
 
     while True:
@@ -52,21 +58,18 @@ def registrar_prestamo():
             break
         print("Fecha no válida. Usa el formato YYYY-MM-DD.")
 
-    prestamos = DataManager.cargar("prestamos")
-    for prestamo in prestamos:
-        if prestamo.nie == nie and prestamo.isbn == isbn and prestamo.estado == "P":
-            print("Ya existe un préstamo activo con ese NIE e ISBN.")
-            print("Pulsa ENTER para continuar.")
-            return
+
+
     nuevo = Prestamo(nie, curso, isbn, fecha_entrega, fecha_devolucion)
     prestamos.append(nuevo)
-    DataManager.guardar("prestamos", prestamos)
+    DataManager.guardar([Prestamo.to_dict(p) for p in prestamos], "prestamos")
     input("Préstamo registrado correctamente. Pulsa Enter para continuar.")
 
 
 
 def ver_prestamos():
-    prestamos = DataManager.cargar("prestamos")
+    prestamos_cargar = DataManager.cargar("prestamos")
+    prestamos = [Prestamo.to_dict(p) for p in prestamos_cargar]
     if not prestamos:
         print("No hay préstamos registrados.")
     else:
@@ -76,7 +79,8 @@ def ver_prestamos():
 
 
 def devolver_libro():
-    prestamos = DataManager.cargar("prestamos")
+    prestamos_cargar = DataManager.cargar("prestamos")
+    prestamos = [Prestamo.to_dict(p) for p in prestamos_cargar]
     nie = input("NIE del alumno: ")
     isbn = input("ISBN del libro a devolver: ")
 
@@ -88,7 +92,7 @@ def devolver_libro():
             break
 
     if encontrado:
-        DataManager.guardar("prestamos", prestamos)
+        DataManager.guardar([Prestamo.to_dict(p) for p in prestamos], "prestamos")  
         print("Libro marcado como devuelto.")
     else:
         print("No se encontró un préstamo activo con ese NIE e ISBN.")
@@ -97,7 +101,8 @@ def devolver_libro():
 
 
 def modificar_prestamo():
-    prestamos = DataManager.cargar("prestamos")
+    prestamos_cargar = DataManager.cargar("prestamos")
+    prestamos = [Prestamo.to_dict(p) for p in prestamos_cargar]
     nie = input("NIE del alumno: ").strip().upper()
     if not validar_nie(nie):
         print("NIE no válido")
@@ -110,7 +115,7 @@ def modificar_prestamo():
         input("Pulsa Enter para continuar.")
         return
 
-    prestamo = next((p for p in prestamos if p["nie"] == nie and p["isbn"] == isbn), None)
+    prestamo = next((p for p in prestamos if p.nie == nie and p.isbn == isbn), None)
 
     if not prestamo:
         print("No se encontró ningún prestamos con esos datos")
@@ -122,23 +127,24 @@ def modificar_prestamo():
     if nueva_fecha:
         from utils.verificadores import verificar_fecha
         if verificar_fecha(nueva_fecha):
-            prestamo["fecha_devolucion"] = nueva_fecha
+            prestamo.fecha_devolucion = nueva_fecha
         else:
             print("La fecha no es valida por lo que se mantendrá la original")
 
 
     nuevo_estado = input(f"Nuevo estado (P: Prestado, D: Devuelto) [{prestamo['estado']}]: ").strip().upper()
     if nuevo_estado in ["P", "D"]:
-        prestamo["estado"] = nuevo_estado
+        prestamo.estado = nuevo_estado
     
-    DataManager.guardar(prestamos, "prestamos")
+    DataManager.guardar([Prestamo.to_dict(p) for p in prestamos], "prestamos")
     print("Datos actualizados correctamente")
     input("Pulsa Enter para continuar.")
 
 
 
 def eliminar_prestamo():
-    prestamos = DataManager.cargar("prestamos")
+    prestamos_cargar = DataManager.cargar("prestamos")
+    prestamos = [Prestamo.to_dict(p) for p in prestamos_cargar]
     nie = input("NIE del alumno: ").strip().upper()
     if not validar_nie(nie):
         print("NIE no válido")
@@ -151,7 +157,7 @@ def eliminar_prestamo():
         input("Pulsa Enter para continuar.")
         return
 
-    prestamo = next((p for p in prestamos if p["nie"] == nie and p["isbn"] == isbn), None)
+    prestamo = next((p for p in prestamos if p.nie == nie and p.isbn == isbn), None)
 
     if not prestamo:
         print("No se encontró ningún prestamos con esos datos")
@@ -159,11 +165,11 @@ def eliminar_prestamo():
         return
     
     print(f"\nPréstamo encontrado:\n{prestamo}")
-    print(f" NIE: {prestamo['nie']}, ISBN: {prestamo['isbn']}, Estado: {prestamo['estado']}")
+    print(f" NIE: {prestamo.nie}, ISBN: {prestamo.isbn}, Estado: {prestamo.estado}")
     confirmar = input("¿Seguro desea eliminar este prestamo? (S/N)").strip().upper()
     if confirmar == "S":
         prestamos.remove(prestamo)
-        DataManager.guardar(prestamos, "prestamos")
+        DataManager.guardar([Prestamo.to_dict(p) for p in prestamos], "prestamos")
         print("Préstamo eliminado correctamente")
     else:
         print("Operacion cancelada")
@@ -172,24 +178,25 @@ def eliminar_prestamo():
 
 
 def cerrar_prestamo():
-    prestamos = DataManager.cargar("prestamos")
+    prestamos_cargar = DataManager.cargar("prestamos")
+    prestamos = [Prestamo.to_dict(p) for p in prestamos_cargar]
     nie = input("NIE del alumno: ").strip().upper()
     if not validar_nie(nie):
         print("NIE no válido")
         input("Pulsa Enter para continuar.")
         return
     
-    prestamos_alumno = [p for p in prestamos if p["nie"] == nie]
+    prestamos_alumno = [p for p in prestamos if p.nie == nie]
 
     if not prestamos_alumno:
         print("Este alumno no tiene prestamos registrados")
     else:
-        no_devueltos = [p for p in prestamos_alumno if p["estado"] != "D"]
+        no_devueltos = [p for p in prestamos_alumno if p.estado != "D"]
 
         if no_devueltos:
             print("No se puede cerrar el prestamo porque aún hay libros pendientes de devolver")
             for p in no_devueltos:
-                print(f" ISBN: {p['isbn']}  |  Estado: {p['estado']}")
+                print(f" ISBN: {p.isbn}  |  Estado: {p.estado}")
         else:
             print("Todos los libros han sido devueltos, puedes cerrar el prestamo")
     input("Pulsa Enter para continuar.")
@@ -202,8 +209,9 @@ def firmar_contrato():
         input("Pulsa Enter para continuar.")
         return
     
-    prestamos = DataManager.cargar("prestamos")
-    prestamos_nie = [p for p in prestamos if p["nie"] == nie]
+    prestamos_cargar = DataManager.cargar("prestamos")
+    prestamos = [Prestamo.to_dict(p) for p in prestamos_cargar]
+    prestamos_nie = [p for p in prestamos if p.nie == nie]
 
     if not prestamos_nie:
         print("Este alumno no tiene prestamos registrados")
@@ -221,8 +229,8 @@ def firmar_contrato():
         f.write(f"NIE del alumno: {nie}\n")
         f.write("Listado de libros: \n\n")
         for p in prestamos_nie:
-            estado = "Devuelto" if p["estado"] == "D" else "Prestado"
-            f.write(f"ISBN: {p['isbn']}  |  Entrega: {p['fecha_entrega']}  |  Devolución:  {p['fecha_devolucion']}  |  Estado: {estado}\n")
+            estado = "Devuelto" if p.estado == "D" else "Prestado"
+            f.write(f"ISBN: {p.isbn}  |  Entrega: {p.fecha_entrega}  |  Devolución:  {p.fecha_devolucion}  |  Estado: {estado}\n")
         
         f.write("\nFirma del alumno: ______________\n")
         f.write("Firma del centro: ______________\n")
