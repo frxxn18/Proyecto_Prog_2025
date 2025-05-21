@@ -94,6 +94,46 @@ def filtrar_alumnos():
     input("Pulsa Enter para continuar.")
 
 
+
+def añadir_alumno():
+    print("--Añadir alumno--")
+
+    nie = input("Ingrese el NIE del alumno:").strip().lower()
+    if not validar_nie(nie):
+        print("NIE no válido")
+        return
+    
+    nombre = input("Ingrese el nombre del alumno:").strip()
+    if not validar_nombre(nombre):
+        print("Nombre no válido")
+        return
+    
+    apellidos = input("Ingrese los apellidos:)").strip().title()
+    tramo = input("Ingrese el tramo (0,  I, II):").strip().upper()
+    bilingüe_input = input("¿El alumno es bilungue? (S/N):").strip().upper()
+    bilingüe = True if bilingüe_input == "S" else False
+
+    alumno = {
+        "nie": nie,
+        "nombre": nombre,
+        "apellidos": apellidos,
+        "tramo": tramo,
+        "bilingüe": bilingüe
+    }
+
+    alumnos = DataManager.cargar("alumnos")
+    if any (a["nie"] == alumno["nie"] for a in alumnos):
+        print("Ya existe un alumno con ese NIE")
+        return
+    
+    alumnos.append(alumno)
+    DataManager.guardar(alumnos, "alumnos")
+    print("Alumno agregado con éxito")
+
+
+
+
+
 def mostrar_menu_alumnos():
     while True:
         limpiar_pantalla()
@@ -101,6 +141,7 @@ def mostrar_menu_alumnos():
         print("1. Ver datos de alumnos")
         print("2. Modificar datos de un alumno")
         print("3. Filtrar alumnos")
+        print("4. Añadir alumno")
         print("0. Volver al menu principal")
 
         opcion = input("Seleccione una opción del menú:")
@@ -110,6 +151,8 @@ def mostrar_menu_alumnos():
             modificar_alumno()
         elif opcion == "3":
             filtrar_alumnos()
+        elif opcion == "4":
+            añadir_alumno()
         elif opcion == "0":
             break
         else:
