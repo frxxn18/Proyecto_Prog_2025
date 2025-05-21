@@ -70,7 +70,42 @@ def cargar_datos():
 
 def guardar_datos():
     print("--Guardar datos--")
-    print("Advertencia: (Los datos se guardarán automaticamente despues de cargarlos)")
+    tablas = ["alumnos", "cursos", "materias", "libros", "prestamos"]
+    for tabla in tablas:
+        en_archivo = DataManager.cargar(tabla)
+        en_memoria =DataManager.cargar(tabla)
+
+        fusionado = en_archivo.copy()
+        añadidos = 0
+
+        if tabla == "prestamos":
+            claves_existentes = set((p['nie'], p['isbn'], p['curso']) for p in en_memoria)
+            for nuevo in en_memoria:
+                clave = (nuevo['nie'], nuevo['isbn'], nuevo['curso'])
+                if clave not in claves_existentes:
+                    fusionado.append(nuevo)
+                    claves_existentes.add(clave)
+                    añadidos += 1
+        else:
+            if tabla == "cursos":
+                clave = "curso"
+            elif tabla == "materias":
+                clave = "id"
+            elif tabla == "alumnos":
+                clave = "nie"
+            elif tabla == "libros":
+                clave = "isbn"
+            else:
+                clave = "id"
+            claves_existentes = set(p[clave] for p in fusionado)
+            for nuevo in en_memoria:
+                if nuevo[clave] not in claves_existentes:
+                    fusionado.append(nuevo)
+                    claves_existentes.add(nuevo[clave])
+                    añadidos += 1
+            DataManager.guardar(fusionado, tabla)
+            print(f"Se añadieron {añadidos} nuevos elementos a {tabla}")
+    input("Pulsa ENTER para continuar.")
 
 
 def exportar_datos_a_elegir():
@@ -127,16 +162,42 @@ def vaciar_datos():
 
 
 
+def crear_backup():
+    print("--Creacion de backup--")
+    carpeta_backup = "backup"
+    os.makedirs(carpeta_backup, exist_ok=True)
+
+    tablas = ["alumnos", "cursos", "materias", "libros", "prestamos"]
+    for tabla in tablas:
+        datos = DataManager.cargar(tabla)
+        if datos:
+            ruta_backup = os.path.join(carpeta_backup, f"{tabla}_back.json")
+            with open(ruta_backup, "w", encoding="utf-8") as f:
+                json.dump(datos, f, indent=4, ensure_ascii=False)
+                print(f"Datos de {tabla} guardados con éxito en {ruta_backup}")
+        else:
+            print(f"No hay datos de {tabla} para guardar, no se genera backup")
+    print("Backup creado con éxito")
+
+
+
+
+
+
+
+
+
 
 def mostrar_menu_datos():
     while True:
         limpiar_pantalla()
         print("--Caga/Exportacion de Datos--")
         print("1. Cargar datos desde los archivos JSON")
-        print("2. Guardar datos en los archivos JSON")
+        print("2. Guardar estado actual en los archivos JSON")
         print("3. Exportar datos a eleccion")
         print("4. Exportar todos los datos")
         print("5. Vaciar los datos")
+        print("6. Crear backup")
         print("0. Volver al menú principal")
 
         opcion = input("Seleccione una opcion: ")
@@ -151,6 +212,8 @@ def mostrar_menu_datos():
             exportar_todo_en_formato()
         elif opcion == "5":
             vaciar_datos()
+        elif opcion == "6":
+            crear_backup()
         elif opcion == "0":
             break
         else:
