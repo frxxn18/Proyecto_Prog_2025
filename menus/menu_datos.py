@@ -5,67 +5,21 @@ import os
 import pandas as pd
 from utils.DataManager import DataManager
 from utils.helpers import limpiar_pantalla
-from utils.validadores import validar_nie, validar_nombre , validar_isbn
-from utils.verificadores import verificar_materias_y_cursos
+
 
 def cargar_datos():
     print("--Carga de datos--")
-    tabla = input("¿Que datos desea cargar? (alumnos,cursos, materias, libros):").strip().lower()
 
-    if tabla == "alumnos":
-        nie = input("Ingrese el NIE del alumno:").strip().upper()
-        if not validar_nie(nie):
-            print("El NIE ingresado no es válido.")
-            return
-        nombre = input("Ingrese el nombre del alumno:").strip()
-        if not validar_nombre(nombre):
-            print("El nombre ingresado no es válido.")
-        apellidos = input("Ingrese los apellidos:)").strip().title()
-        tramo = input("Ingrese el tramo (0,  I, II):").strip().upper()
-        bilingüe = input("¿El alumno es bilungue? (S/N):").strip().upper() == "S"
-
-        alumno = {
-            "nie": nie,
-            "nombre": nombre,
-            "apellidos": apellidos,
-            "tramo": tramo,
-            "bilingüe": bilingüe
-        }
-
-        alumnos = DataManager.get_data("alumnos")
-        alumnos.append(alumno)
-        DataManager.guardar(alumnos, "alumnos")
-        print("Alumno agregado con éxito")
-
-    elif tabla == "libros":
-        if not verificar_materias_y_cursos():
-            return
-        isbn = input("Ingrese el ISBN:").strip().replace("-", "")
-        if not validar_isbn(isbn):
-            print("El ISBN ingresado no es válido.")
-            return
-        titulo =   input("Ingrese el titulo del libro:").strip() 
-        autor = input("Ingrese el autor del libro:").strip()
-        ejemplares = int(input("Ingrese el número de ejemplares:").strip())
-        id_materia = input("Ingrese el id de la materia:").strip()
-        id_curso = input("Ingrese el id del curso:").strip()
-
-        libro = {
-            "isbn": isbn,
-            "titulo": titulo,
-            "autor": autor,
-            "numero_ejemplares": ejemplares,
-            "id_materia": id_materia,
-            "id_curso": id_curso
-        }
-        
-        libros = DataManager.cargar("libros")
-        libros.append(libro)
-        DataManager.guardar(libros, "libros")
-        print("Libro agregado con éxito")
+    tablas = ["alumnos", "cursos", "materias", "libros", "prestamos"]
+    for tabla in tablas:
+        try:
+            datos = DataManager.get_data(tabla)
+            print(f"Se cargaron {len(datos)} elementos de {tabla}")
+        except Exception as e:
+            print(f"No se pudo cargar {tabla} porque: {e}")
     
-    else:
-        print("La tabla seleccionada no es válida.")
+    input("Pulsa ENTER para continuar.")
+
 
 
 def guardar_datos():

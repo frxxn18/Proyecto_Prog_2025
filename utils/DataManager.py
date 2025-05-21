@@ -1,5 +1,10 @@
 import os 
 import json
+from models.alumno import Alumno
+from models.libro import Libro
+from models.materia import Materia
+from models.curso import Curso
+from models.prestamo import Prestamo
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
@@ -58,3 +63,18 @@ class DataManager:
     def vaciar_base(rutas: list):
         for ruta in rutas:
             DataManager.guardar([], ruta)
+
+
+    @staticmethod
+    def get_data(tabla):
+        datos = DataManager.cargar(tabla)
+        if tabla == "alumnos":
+            return [Alumno.from_dict(d) for d in datos]
+        elif tabla == "cursos":
+            return [Curso.from_dict(d) for d in datos]
+        elif tabla == "materias":
+            return [Materia.from_dict(d) for d in datos]
+        elif tabla == "libros":
+            return [Libro.from_dict(d) for d in datos]
+        elif tabla == "prestamos":
+            return [Prestamo.from_dict(d) for d in datos]

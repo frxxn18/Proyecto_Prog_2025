@@ -1,0 +1,16 @@
+[
+  {
+    "nie": "12345678A",
+    "nombre": "Lucía",
+    "apellidos": "Gómez Fernández",
+    "tramo": "I",
+    "bilingüe": true
+  },
+  {
+    "nie": "87654321B",
+    "nombre": "Javier",
+    "apellidos": "Pérez López",
+    "tramo": "0",
+    "bilingüe": false
+  }
+]
