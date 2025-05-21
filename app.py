@@ -8,7 +8,6 @@ def main():
         logout()
     else:
         print("Sesión no iniciada")
-        input("Pulsa ENTER para continuar.")
 
 if __name__ == "__main__":
     main()

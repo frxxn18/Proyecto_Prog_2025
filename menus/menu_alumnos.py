@@ -2,6 +2,7 @@
 from utils.DataManager import DataManager
 from utils.helpers import limpiar_pantalla
 from utils.validadores import validar_nombre, validar_nie
+from models.prestamo import Prestamo
 
 def ver_datos_alumno():
     nie = input("Introduzca el NIE del alumno:").strip().lower()
@@ -129,8 +130,6 @@ def añadir_alumno():
     alumnos.append(alumno)
     DataManager.guardar(alumnos, "alumnos")
     print("Alumno agregado con éxito")
-
-
 
 
 

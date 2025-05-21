@@ -136,12 +136,6 @@ def crear_backup():
 
 
 
-
-
-
-
-
-
 def mostrar_menu_datos():
     while True:
         limpiar_pantalla()

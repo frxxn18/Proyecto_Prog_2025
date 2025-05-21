@@ -237,3 +237,31 @@ def firmar_contrato():
     
     print(f"Contrato guardado en {ruta_contrato}")
     input("Pulsa Enter para continuar.")
+
+
+
+def cambiar_curso_alumno():
+    nie = input("Introduzca el NIE del alumno:").strip().upper()
+    nuevo_curso = input("Introduzca el nuevo curso:").strip().upper()
+    if not validar_nie(nie):
+        print("NIE no válido")
+        input("Pulsa Enter para continuar.")
+        return
+    
+    prestamos_dict = DataManager.cargar("prestamos")
+    prestamos = [Prestamo.from_dict(p) for p in prestamos_dict]
+    encontrados = 0
+
+    for prestamo in prestamos:
+        if prestamo.nie == nie:
+            prestamo.curso = nuevo_curso
+            encontrados += 1
+
+    if encontrados == 0:
+        print("No se encontraron prestamos para el alumno.")
+        input("Pulsa Enter para continuar.")
+        return
+
+    DataManager.guardar([p.to_dict() for p in prestamos], "prestamos")
+    print(f"{encontrados} prestamos modificados al curso {nuevo_curso} para el nie {nie}")
+    input("Pulsa Enter para continuar.")

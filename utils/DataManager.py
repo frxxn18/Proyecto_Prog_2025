@@ -5,10 +5,12 @@ from models.libro import Libro
 from models.materia import Materia
 from models.curso import Curso
 from models.prestamo import Prestamo
+from utils.validadores import validar_nie, validar_isbn
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
-
+MEMORIA = {}
 class DataManager:
 
 
@@ -67,14 +69,61 @@ class DataManager:
 
     @staticmethod
     def get_data(tabla):
+        if tabla in MEMORIA:
+            return MEMORIA[tabla]
+        
         datos = DataManager.cargar(tabla)
         if tabla == "alumnos":
-            return [Alumno.from_dict(d) for d in datos]
+            objetos = []
+            nies_existentes = set()
+            for d in datos:
+                try:
+                    if not validar_nie(d["nie"]):
+                        print(f"NIE no válido: {d['nie']}")
+                        continue
+                    if d["nie"] in nies_existentes:
+                        print(f"NIE duplicado: {d['nie']}")
+                        continue
+                    alumno = Alumno.from_dict(d)
+                    objetos.append(alumno)
+                    nies_existentes.add(d["nie"])
+                except Exception as e:
+                    print(f"Error al cargar alumno {d['nie']}: {e}")
         elif tabla == "cursos":
-            return [Curso.from_dict(d) for d in datos]
+            objetos = [Curso.from_dict(d) for d in datos]
         elif tabla == "materias":
-            return [Materia.from_dict(d) for d in datos]
+            objetos = [Materia.from_dict(d) for d in datos]
         elif tabla == "libros":
-            return [Libro.from_dict(d) for d in datos]
+            objetos = []
+            isbns = set()
+            for d in datos:
+                try:
+                    if not validar_isbn(d["isbn"]):
+                        print(f"ISBN no válido: {d['isbn']}")
+                        continue
+                    if d["isbn"] in isbns:
+                        print(f"ISBN duplicado: {d['isbn']}")
+                        continue
+                    libro = Libro.from_dict(d)
+                    objetos.append(libro)
+                    isbns.add(d["isbn"])
+                except Exception as e:
+                    print(f"Error al cargar libro {d['isbn']}: {e}")
         elif tabla == "prestamos":
-            return [Prestamo.from_dict(d) for d in datos]
+            objetos = []
+            claves_prestamos = set()
+            for d in datos:
+                try:
+                    clave = (d['nie'], d['isbn'], d['curso'])
+                    if clave in claves_prestamos:
+                        print(f"Préstamo duplicado: {clave[0]} ISBN:{clave[2]}")
+                        continue
+                    prestamo = Prestamo.from_dict(d)
+                    objetos.append(prestamo)
+                    claves_prestamos.add(clave)
+                except Exception as e:
+                    print(f"Error al cargar préstamo {clave}: {e}")
+        else:
+            objetos = datos
+        MEMORIA[tabla] = objetos
+        return objetos
