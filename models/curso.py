@@ -14,7 +14,15 @@ class Curso:
 
     @staticmethod
     def from_dict(data: dict):
+        curso = data.get("curso", "No definido")
+        nivel = data.get("nivel", "No definido")
+
+        if curso is None:
+            raise ValueError("Falta campo obligatorio")
+        if nivel is None:
+            print(f"Curso {curso} no tiene nivel, se le asignara --> No definido ")
+
         return Curso(
-            curso=data["curso"],
-            nivel=data["nivel"]
+            curso = curso,
+            nivel = nivel
         )

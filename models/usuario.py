@@ -14,4 +14,8 @@ class Usuario:
 
     @staticmethod
     def from_dict(data):
-        return Usuario(data["nombre"], data["contraseña"])
+        nombre = data.get("nombre", "No definido")
+        contraseña = data.get("contraseña", "No definido")
+        if nombre is None:
+            raise ValueError("Falta campo obligatorio (Nombre)")
+        return Usuario(nombre, contraseña)

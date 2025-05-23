@@ -14,3 +14,20 @@ class Materia:
             nombre = data["nombre"],
             departamento =data["departamento"]
         )
+
+    @staticmethod
+    def from_dict(data):
+        id_ = data.get("id", "No definido")
+        nombre = data.get("nombre", "No definido")
+        departamento = data.get("departamento", "No definido")
+
+        if id_ is None or nombre is None:
+            raise ValueError("Faltan campos obligatorios")
+        if "departamento" not in data:
+            print(f"Materia {id_} no tiene departamento, se le asignara --> No definido ")
+        
+        return Materia(
+            id = id_,
+            nombre = nombre,
+            departamento = departamento
+        )

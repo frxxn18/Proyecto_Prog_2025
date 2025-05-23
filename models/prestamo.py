@@ -37,17 +37,18 @@ class Prestamo:
 
     @staticmethod
     def from_dict(data: dict):
-        estado = data.get
+        nie = data.get("nie", "No definido")
+        curso = data.get("curso", "No definido")
+        isbn = data.get("isbn", "No definido")
+        fecha_entrega = data.get("fecha_entrega", "No definido")
+        fecha_devolucion = data.get("fecha_devolucion", "No definido")
+        estado = data.get("estado", "P")
         if estado not in ["P", "D"]:
             estado = "P"
-        return Prestamo(
-            nie=data["nie"],
-            curso=data["curso"],
-            isbn=data["isbn"],
-            fecha_entrega=data["fecha_entrega"],
-            fecha_devolucion=data["fecha_devolucion"],
-            estado= estado
-        )
+        if nie is None or isbn is None:
+            raise ValueError("Faltan campos obligatorios (nie o isbn)")
+        return Prestamo(nie, curso, isbn, fecha_entrega, fecha_devolucion, estado)
+
     
 
     def marcar_como_devuelto(self):

@@ -123,7 +123,7 @@ def modificar_prestamo():
         return
     
     print(f"\nPréstamo encontrado:\n{prestamo}")
-    nueva_fecha = input(f"Nueva fecha de devolucion [{prestamo['fecha_devolucion']}]:").strip()
+    nueva_fecha = input(f"Nueva fecha de devolucion [{prestamo.fecha_devolucion}]:").strip()
     if nueva_fecha:
         from utils.verificadores import verificar_fecha
         if verificar_fecha(nueva_fecha):
@@ -132,7 +132,7 @@ def modificar_prestamo():
             print("La fecha no es valida por lo que se mantendrá la original")
 
 
-    nuevo_estado = input(f"Nuevo estado (P: Prestado, D: Devuelto) [{prestamo['estado']}]: ").strip().upper()
+    nuevo_estado = input(f"Nuevo estado (P: Prestado, D: Devuelto) [{prestamo.estado}]: ").strip().upper()
     if nuevo_estado in ["P", "D"]:
         prestamo.estado = nuevo_estado
     

@@ -18,10 +18,18 @@ class Alumno:
 
     @staticmethod
     def from_dict(data):
+        nie = data.get("nie", "No definido")
+        nombre = data.get("nombre", "No definido")
+        apellidos = data.get("apellidos", "")
+        tramo = data.get("tramo", 0)
+        bilingüe = data.get("bilingüe", False)
+
+        if nie is None:
+            raise ValueError("Falta campo obligatorio nie")
         return Alumno(
-            data["nie"],
-            data["nombre"],
-            data["apellidos"],
-            data["tramo"],
-            data["bilingüe"]
+            nie = nie,
+            nombre = nombre,
+            apellidos = apellidos,
+            tramo = tramo,
+            bilingüe = bilingüe
         )

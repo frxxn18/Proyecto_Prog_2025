@@ -25,11 +25,25 @@ class Libro:
 
     @staticmethod
     def from_dict(data: dict):
+        isbn = data.get("isbn", "No definido")
+        titulo = data.get("titulo", "No definido")
+        autor = data.get("autor", "No definido")
+        numero_ejemplares = data.get("numero_ejemplares", 1)
+        id_materia = data.get("id_materia", 0)
+        id_curso = data.get("id_curso", "No definido")
+
+        if isbn is None:
+            raise ValueError("Falta campo obligatorio")
+        if titulo is None:
+            print(f"Libro {isbn} no tiene titulo, se le asignara --> No definido ")
+        if autor is None:
+            print(f"Libro {isbn} no tiene autor, se le asignara --> No definido ")
+        
         return Libro(
-            isbn=data["isbn"],
-            titulo=data["titulo"],
-            autor=data["autor"],
-            numero_ejemplares=data["numero_ejemplares"],
-            id_materia=data["id_materia"],
-            id_curso=data["id_curso"]
+            isbn = isbn,
+            titulo = titulo,
+            autor = autor,
+            numero_ejemplares = numero_ejemplares,
+            id_materia = id_materia,
+            id_curso = id_curso
         )
