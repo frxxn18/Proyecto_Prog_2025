@@ -1,18 +1,18 @@
 [
-  {
-    "isbn": "9788437627215",
-    "titulo": "Álgebra Elemental",
-    "autor": "Juan Martínez",
-    "numero_ejemplares": 3,
-    "id_materia": 1,
-    "id_curso": "1ESO"
-  },
-  {
-    "isbn": "9788426355731",
-    "titulo": "Gramática Básica",
-    "autor": "Carmen Ruiz",
-    "numero_ejemplares": 2,
-    "id_materia": 2,
-    "id_curso": "2ESO"
-  }
+    {
+        "isbn": "9788437627215",
+        "titulo": "\u00c1lgebra Elemental",
+        "autor": "Juan Mart\u00ednez",
+        "numero_ejemplares": 3,
+        "id_materia": 1,
+        "id_curso": "1ESO"
+    },
+    {
+        "isbn": "9788426355731",
+        "titulo": "Gram\u00e1tica B\u00e1sica",
+        "autor": "Carmen Ruiz",
+        "numero_ejemplares": 2,
+        "id_materia": 2,
+        "id_curso": "2ESO"
+    }
 ]

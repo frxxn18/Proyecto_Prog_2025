@@ -1,10 +1,10 @@
 [
-  {
-    "nie": "12345678A",
-    "curso": "1ESO",
-    "isbn": "9788437627215",
-    "fecha_entrega": "2024-09-10",
-    "fecha_devolucion": "2025-06-20",
-    "estado": "P"
-  }
+    {
+        "nie": "12345678A",
+        "curso": "1ESO",
+        "isbn": "9788437627215",
+        "fecha_entrega": "2024-09-10",
+        "fecha_devolucion": "2025-06-20",
+        "estado": "P"
+    }
 ]
