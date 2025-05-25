@@ -4,3 +4,4 @@
 /models/__pycache__/
 /tests/__pycache__/
 test_generador_datos.py
+main_tests.py
