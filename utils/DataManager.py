@@ -25,7 +25,7 @@ class DataManager:
                 else:
                     valor = value
                 serializable[clave] = valor
-            return json.dumps(serializable, indent=4)
+            return json.dumps(serializable, indent=4, ensure_ascii=False)
         
         elif isinstance(objetos, list):
             serializable = []
@@ -34,10 +34,10 @@ class DataManager:
                     serializable.append(item.to_dict())
                 else:
                     serializable.append(item)
-            return json.dumps(serializable, indent=4)
+            return json.dumps(serializable, indent=4, ensure_ascii=False)
 
         else:
-            return json.dumps(objetos, indent=4)
+            return json.dumps(objetos, indent=4, ensure_ascii=False)
 
 
 
