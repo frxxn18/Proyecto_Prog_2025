@@ -1,10 +1,10 @@
 [
-    {
-        "curso": "1ESO",
-        "nivel": "Primero de ESO"
-    },
-    {
-        "curso": "2ESO",
-        "nivel": "Segundo de ESO"
-    }
+  {
+    "curso": "1ESO",
+    "nivel": "Primero de ESO"
+  },
+  {
+    "curso": "2ESO",
+    "nivel": "Segundo de ESO"
+  }
 ]

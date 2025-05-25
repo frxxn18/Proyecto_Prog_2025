@@ -1,12 +1,12 @@
 [
-    {
-        "id": 1,
-        "nombre": "Matem\u00e1ticas",
-        "departamento": "Ciencias"
-    },
-    {
-        "id": 2,
-        "nombre": "Lengua Castellana",
-        "departamento": "Lengua"
-    }
+  {
+    "id": 1,
+    "nombre": "Matemáticas",
+    "departamento": "Ciencias"
+  },
+  {
+    "id": 2,
+    "nombre": "Lengua Castellana",
+    "departamento": "Lengua"
+  }
 ]
