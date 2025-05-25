@@ -1,10 +1,26 @@
 [
     {
         "nie": "12345678A",
-        "curso": "1ESO",
+        "curso": "PRUEBA_CURSO",
         "isbn": "9788437627215",
         "fecha_entrega": "2024-09-10",
         "fecha_devolucion": "2025-06-20",
-        "estado": "P"
+        "estado": "D"
+    },
+    {
+        "nie": "12345678A",
+        "curso": "PRUEBA_CURSO",
+        "isbn": "9999999999999",
+        "fecha_entrega": "2024-09-01",
+        "fecha_devolucion": "2025-06-01",
+        "estado": "D"
+    },
+    {
+        "nie": "12345678A",
+        "curso": "PRUEBA_CURSO",
+        "isbn": "1ESO",
+        "fecha_entrega": "2024-09-01",
+        "fecha_devolucion": "2025-06-01",
+        "estado": "D"
     }
 ]

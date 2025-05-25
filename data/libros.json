@@ -14,5 +14,13 @@
         "numero_ejemplares": 2,
         "id_materia": 2,
         "id_curso": "2ESO"
+    },
+    {
+        "isbn": "9999999999999",
+        "titulo": "TempLibro",
+        "autor": "TempAutor",
+        "numero_ejemplares": 1,
+        "id_materia": 1,
+        "id_curso": "1ESO"
     }
 ]

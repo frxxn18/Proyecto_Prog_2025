@@ -43,5 +43,35 @@ class TestListados(unittest.TestCase):
         pendientes = [p for p in prestamos if p.estado == "P"]
         self.assertIsInstance(pendientes, list)
 
+
+    def test_listado_completo_alumnos(self):
+        alumnos = DataManager.get_data("alumnos")
+        self.assertIsInstance(alumnos, list)
+        for alumno in alumnos:
+            self.assertTrue(hasattr(alumno, "nie"))
+            self.assertTrue(hasattr(alumno, "nombre"))
+            self.assertTrue(hasattr(alumno, "apellidos"))
+
+    
+    def test_listado_completo_libros(self):
+        libros = DataManager.get_data("libros")
+        self.assertIsInstance(libros, list)
+        for libro in libros:
+            self.assertTrue(hasattr(libro, "isbn"))
+            self.assertTrue(hasattr(libro, "titulo"))
+            self.assertTrue(hasattr(libro, "autor"))
+
+    
+    def test_listado_completo_prestamos(self):
+        prestamos = DataManager.get_data("prestamos")
+        self.assertIsInstance(prestamos, list)
+        for p in prestamos:
+            self.assertTrue(hasattr(p, "nie"))
+            self.assertTrue(hasattr(p, "isbn"))
+            self.assertTrue(p.estado in ["P", "D"])
+
+
+
+
 if __name__ == '__main__':
     unittest.main()

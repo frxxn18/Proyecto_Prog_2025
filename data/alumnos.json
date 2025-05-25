@@ -12,5 +12,12 @@
         "apellidos": "P\u00e9rez L\u00f3pez",
         "tramo": "0",
         "biling\u00fce": false
+    },
+    {
+        "nie": "99999999Z",
+        "nombre": "TestNombre",
+        "apellidos": "TestApellido",
+        "tramo": "0",
+        "biling\u00fce": false
     }
 ]

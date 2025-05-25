@@ -202,8 +202,9 @@ def cerrar_prestamo():
     input("Pulsa Enter para continuar.")
 
 
-def firmar_contrato():
-    nie = input("NIE del alumno: ").strip().upper()
+def firmar_contrato(nie=None):
+    if nie is None:
+        nie = input("NIE del alumno: ").strip().upper()
     if not validar_nie(nie):
         print("NIE no válido")
         input("Pulsa Enter para continuar.")
@@ -218,7 +219,7 @@ def firmar_contrato():
         input("Pulsa Enter para continuar.")
         return
     
-    ruta_base = os.path.dirname(os.path.abspath(__file__))
+    ruta_base = os.path.dirname((os.path.dirname(os.path.abspath(__file__))))
     ruta_data = os.path.join(ruta_base, "data")
     os.makedirs(ruta_data, exist_ok=True)
 
